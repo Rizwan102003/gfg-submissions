@@ -11,48 +11,38 @@ struct Node {
 
 
 // } Driver Code Ends
-
 /* A binary tree node
-
 struct Node
 {
     int data;
     struct Node* left;
     struct Node* right;
-
     Node(int x){
         data = x;
         left = right = NULL;
     }
 };
- */
-
+*/
 class Solution {
   public:
     vector<int> leftView(Node *root) {
+        if(!root) return {};
+        queue<Node*> pq;
+        pq.push(root);
         vector<int> ans;
-        if (root == NULL) return ans;
-        queue<Node*> q;
-        q.push(root);
-        while (!q.empty()){
-            int size = q.size();
-            for ( int i = 0; i < size;  i++){
-                Node* curr = q.front(); q.pop();
-                if ( i == 0){
-                    ans.push_back(curr->data);
-                }
-                if (curr->left != NULL){
-                    q.push(curr->left);
-                }
-                if (curr->right != NULL){
-                    q.push(curr->right);
-                }
+        while(!pq.empty()){
+            int size = pq.size();
+            for(int i=0 ; i < size ; i++){
+                Node* node = pq.front();
+                pq.pop();
+                if(i == 0) ans.push_back(node->data);
+                if(node->left) pq.push(node->left);
+                if(node->right) pq.push(node->right);
             }
         }
         return ans;
     }
 };
-
 
 //{ Driver Code Starts.
 
